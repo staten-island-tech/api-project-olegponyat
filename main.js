@@ -4,21 +4,16 @@ function greet(fart){
     })
     return greetPromise
 }
-const olg = greet('oleg')
-console.log(olg)
-olg.then((result)=>{
-    console.log(result)
-})
 
-var bby = require('bestbuy')('4oAIRKlbsIUvAP0gG5SNNcoO');
-bby.categories('',{show:'id'}).then(function(data){
-  console.log(data);
-});
-/* async function getData(URL){
+
+const URL = 'https://api.bestbuy.com/v1/products/8880044.json?show=name,&apiKey=4oAIRKlbsIUvAP0gG5SNNcoO'
+async function getData(URL){
     try {
         const response = await fetch(URL)
         console.log(response);
     } catch (error) {
         
     }
-} */
+}
+
+//POSTMAN(HTTP) + QUERY BUILDER
