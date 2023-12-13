@@ -15,23 +15,21 @@ const DOMSelectors = {
 
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
 const poop = 'https://api.bestbuy.com/v1/products((categoryPath.id=pcmcat209400050001))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name&format=json'
-console.log(poop)
+
 async function getData(URL){
     try {
-        const response = await fetch(URL);
-        const fart = await response.json();
+        let response = await fetch(URL);
+        let fart = await response.json();
         let count = 0
-        console.log(fart)
+
         function clearField(x){
             x.innerHTML = ''
         }
-        fart.products.forEach((poopy)=>{
-            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h2>${poopy.name}</h2>`)
-        })
         DOMSelectors.searchButton.addEventListener('click',function(e){
             e.preventDefault();
             clearField(DOMSelectors.flexblacks)
-            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h2>${DOMSelectors.searchbar.value}</h2>`)
+            response = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value}))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name&format=json`
+            console.log(response,fart)
             
         })
     if(response.status != 200){
