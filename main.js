@@ -11,7 +11,9 @@ const DOMSelectors = {
     searchbar: document.querySelector('#search'),
     searchButton: document.querySelector('#submitter'),
 }
-
+const categoryPaths = {
+    
+}
 
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
 function clearField(x){
@@ -20,7 +22,8 @@ function clearField(x){
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
-    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value}))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=image.asc&show=name,image&pageSize=15&page=10&format=json`
+    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value})&(categoryPath.id=pcmcat209400050001))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name&pageSize=100&format=json`
+    console.log(poop)
     async function getData(URL){
         try {
             let response = await fetch(URL);
