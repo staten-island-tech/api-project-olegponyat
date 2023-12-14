@@ -15,15 +15,20 @@ html{
     margin: 0;
     padding: 0;
 }
-img{
+.logo{
   height: 10rem;
 }
-  nav {
+.cart{
+  height: 2rem;
+  margin-left: 375%;
+  margin-top: 100%;
+}
+  .navbar {
     background-color: var(--color-brand);
     display: flex;
     padding: 1rem;
   }
-  nav ul {
+  .navbar .ulstart {
     list-style: none;
     align-items: center;
     margin: auto;
@@ -31,7 +36,7 @@ img{
     font-size: 2rem;
     display: flex;
   }
-  nav ul li a {
+  .navbar .ulstart .navlist .inners {
     display: flex;
     margin-top: 8%;
     padding: 20px 65px;
@@ -39,20 +44,22 @@ img{
     color: var(--color-light);
     transition: var(--dur) all;
     position: relative;
+    margin-left: 10%;
+    margin-right: 10%;
   }
       
-  a:hover {
+  .inners:hover {
     background-color: var(--color-brand-slightly-less-lighter-than-normal-color-brand);
-    border-radius: 5%;
+    border-radius: 100%;
   }
-label {
+.label {
     position: absolute;
     clip: rect(1px, 1px, 1px, 1px);
     height: 1px;
     width: 1px;
     overflow: hidden;
 }
-input[type="search"] {
+.search {
     width: 100%;
     background: var(--color-light);
     padding: 0 1.6rem;
@@ -63,7 +70,7 @@ input[type="search"] {
     position: relative;
     border: 2px solid black;
 }
-form {
+.formfirst {
     margin-top: 7%;
     margin-right: 50%;
     position: relative;
@@ -71,13 +78,13 @@ form {
     background: var(--color-brand);
     border-radius: var(--rad);
   }
-input{
+.search{
     height: var(--height);
     font-family: var(--font-fam);
     color: var(--color-dark);
     font-size: 1.2rem;
 }
-button {
+.submitter{
     display: none;
     position: absolute;
     top: 0;
@@ -91,7 +98,7 @@ button {
     border: 0;
     color: var(--color-light);
     font-size: 1.2rem;
-  }
+}
 input:not(:placeholder-shown) {
     border-radius: var(--rad) 0 0 var(--rad);
     width: calc(100% - var(--btn-width));
