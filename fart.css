@@ -15,12 +15,37 @@ html{
     margin: 0;
     padding: 0;
 }
+#main{
+  font-size: 10rem;
+  display: flex;
+  justify-content: center;
+}
+.cookies{
+  font-size: 5rem;
+  height: 350px;
+  width: 350px;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+.moneycounter{
+  font-size: 3rem;
+  margin-top: 5%;
+  justify-content: center;
+  display: flex;
+}
 .logo{
   height: 10rem;
+  margin-left: -15%;
+  transition: var(--dur) all;
+}
+.logo:hover{
+  box-shadow: 0 0.5rem 2rem var(--color-brand-slightly-less-lighter-than-normal-color-brand);
 }
 .cart{
   height: 2rem;
-  margin-left: 375%;
+  margin-left: 300%;
   margin-top: 100%;
 }
   .navbar {
@@ -36,6 +61,10 @@ html{
     font-size: 2rem;
     display: flex;
   }
+  .inners{
+    display: flex;
+    justify-content: center;
+  }
   .navbar .ulstart .navlist .inners {
     display: flex;
     margin-top: 8%;
@@ -44,13 +73,17 @@ html{
     color: var(--color-light);
     transition: var(--dur) all;
     position: relative;
-    margin-left: 10%;
-    margin-right: 10%;
+    cursor: pointer;
+
   }
       
   .inners:hover {
+    box-shadow: 0 .5rem 1.5rem var(--color-brand-slightly-less-lighter-than-normal-color-brand);
+    border-radius: 10%;
+    margin-left: 9%;
+    margin-right: 9%;
+    justify-content: center;
     background-color: var(--color-brand-slightly-less-lighter-than-normal-color-brand);
-    border-radius: 100%;
   }
 .label {
     position: absolute;
@@ -105,4 +138,53 @@ input:not(:placeholder-shown) {
     + button {
       display: block;
     }
+  }
+  .dropbtn:hover {
+    box-shadow: 0 .5rem 1.5rem var(--color-brand-slightly-less-lighter-than-normal-color-brand);
+    border-radius: 10%;
+    margin-left: -9%;
+    margin-right: -9%;
+    justify-content: center;
+    background-color: var(--color-brand-slightly-less-lighter-than-normal-color-brand);
+  }
+  .dropdown{
+    margin-left: 0%;
+    margin-right: 5%;
+    background-color: var(--color-brand);
+    transition: var(--dur) all;
+  }
+  .dropbtn {
+    background-color: var(--color-brand);
+    color: var(--color-light);
+    padding: 25px 40px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: var(--dur) all;
+  }
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+  }
+  .dropdown-content a {
+    color: black;
+    font-size: 1.2rem;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: var(--color-light);
+  }
+  
+  .dropdown:click .dropdown-content {
+    display: block;
+    
+  }
+
+  .dropdown:focus-within .dropdown-content {
+    display: block;
   }

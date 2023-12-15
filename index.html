@@ -9,8 +9,15 @@
 
       <nav class="navbar">
         <ul class="ulstart">
-          <li class="navlist"><img src="grdy.png" class="logo"></li>
-          <li class="navlist"><a href="#" class="inners">dropdown here</a></li>
+          <li class="navlist"><img src="grdy.png" class="logo" id="homer"></li>
+          <div class="dropdown">            
+            <a class="inners"><button class="dropbtn">dropdown</button></a>
+            <div class="dropdown-content">
+              <a href="#">Option 1</a>
+              <a href="#">Option 2</a>
+              <a href="#">Option 3</a>              
+            </div>
+          </div>        
           <li class="navlist">
             <form type="search" class="formfirst">
                 <label for="search" class="label">Search for stuff</label>
@@ -18,7 +25,8 @@
                 <button type="submit" class="submitter">go</button>    
             </form>
           </li>
-          <li><img src="cart.png" class="cart"></li>
+          <li class="navlist"><a class="inners" id="money">money</a></li>
+          <li class="navlist"><img src="cart.png" class="cart"></li>
           <li class="navlist"><a class="inners" id="cart">cart</a></li>
         </ul>
       </nav>
@@ -26,9 +34,7 @@
     
     
     <div id="flexbox">
-        <div class="card">
-            <h2 class="card-title"></h2>
-        </div>
+ 
     </div>
     
     <script src="main.js"></script>
