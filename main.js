@@ -19,52 +19,57 @@ console.log(DOMSelectors.dropdownCheckboxes)
 
 
 const categoryPaths = {
-    cellphones: '1pcmcat209400050001',
-    desktops: '2abcat0501000',
-    cameras: '3abcat0401000',
-    health: '4pcmcat242800050021',
-    headphones: '5abcat0204000',
-    homeaudio: '6pcmcat241600050001',
-    homeautomation: '7pcmcat254000050002',
-    tablets: '8pcmcat209000050006',
-    laptops: '9abcat0502000',
-    ps4: '10pcmcat295700050012',
-    speakers: 'pcmcat310200050004',
-    stovetops: 'abcat0904000',
-    refrigerators: 'abcat0901000',
-    smallkitchen: 'abcat0912000',
-    television: 'abcat0101000',
-    washer: 'abcat0910000',
+    cellphones: '0pcmcat209400050001',
+    desktops: '1abcat0501000',
+    cameras: '2abcat0401000',
+    health: '3pcmcat242800050021',
+    headphones: '4abcat0204000',
+    tablets: '5pcmcat209000050006',
+    laptops: '6abcat0502000',
+    speakers: '7pcmcat310200050004',
+    refrigerators: '8abcat0901000',
+    television: '9abcat0101000',
 }
 let counter = 1
 let poopy = []
 let money = 20
-
-
+let checkedCount = 0;
+const maxAllowed = 1;
+let categoryID
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
+
+
 
 function clearField(x){
     x.innerHTML = ''
 }
+
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
     clearField(DOMSelectors.flexblacks)
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>hi guys</h1>`)
 })
-function farting(){
-    DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
-        if(checkbox.checked === true){
-            console.log(checkbox.value)
-        }else{
-            console.log('unchecked')
-        }
-    })
-}
 DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
-    checkbox.addEventListener('click',function(e){
-        farting();
+    checkbox.addEventListener('change',function(e){
+        if (this.checked) {
+                checkedCount += 1;
+                if (checkedCount > maxAllowed) {
+                    this.checked = false;
+                    checkedCount -= 1;
+                }
+            } else {
+                checkedCount -= 1;
+            }
+        DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
+            if(checkbox.checked === true){
+                
+            }
+
+        })
     })
 })
+
+
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
@@ -76,9 +81,8 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
         money = money + 1
         clearField(moneycounter)
         moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
+    })
 })
-})
-
 DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
@@ -117,7 +121,6 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         })
     })
 })
-
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
@@ -131,7 +134,6 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
         moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
 })
 })
-
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
