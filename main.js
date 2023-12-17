@@ -13,21 +13,22 @@ const DOMSelectors = {
     cartButton: document.querySelector('#cart'),
     moneyButton: document.querySelector('#money'),
     homer: document.querySelector('#homer'),
-    dropdownCheckboxes: document.querySelector('.dropbtn'),
-    cell: document.querySelector('#cellular'),
+    dropdownCheckboxes: document.querySelectorAll('.checkersbockers'),
 }
+console.log(DOMSelectors.dropdownCheckboxes)
+
 
 const categoryPaths = {
-    cellphones: 'pcmcat209400050001',
-    desktops: 'abcat0501000',
-    cameras: 'abcat0401000',
-    health: 'pcmcat242800050021',
-    headphones: 'abcat0204000',
-    homeaudio: 'pcmcat241600050001',
-    homeautomation: 'pcmcat254000050002',
-    tablets: 'pcmcat209000050006',
-    laptops: 'abcat0502000',
-    ps4: 'pcmcat295700050012',
+    cellphones: '1pcmcat209400050001',
+    desktops: '2abcat0501000',
+    cameras: '3abcat0401000',
+    health: '4pcmcat242800050021',
+    headphones: '5abcat0204000',
+    homeaudio: '6pcmcat241600050001',
+    homeautomation: '7pcmcat254000050002',
+    tablets: '8pcmcat209000050006',
+    laptops: '9abcat0502000',
+    ps4: '10pcmcat295700050012',
     speakers: 'pcmcat310200050004',
     stovetops: 'abcat0904000',
     refrigerators: 'abcat0901000',
@@ -39,6 +40,7 @@ let counter = 1
 let poopy = []
 let money = 20
 
+
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
 
 function clearField(x){
@@ -49,8 +51,19 @@ DOMSelectors.homer.addEventListener('click',function(e){
     clearField(DOMSelectors.flexblacks)
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>hi guys</h1>`)
 })
-DOMSelectors.dropdownCheckboxes.addEventListener('click',function(e){
-    e.preventDefault();
+function farting(){
+    DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
+        if(checkbox.checked === true){
+            console.log(checkbox.value)
+        }else{
+            console.log('unchecked')
+        }
+    })
+}
+DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
+    checkbox.addEventListener('click',function(e){
+        farting();
+    })
 })
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
@@ -71,9 +84,10 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     counter = 1
     clearField(DOMSelectors.flexblacks);
     console.log(poopy.length)
+    console.log(poopy)
     if(poopy.length != 0){
         poopy.forEach((item)=>{
-            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card>${counter}<h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
+            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
             counter++
         })
     }else{
@@ -84,20 +98,21 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         btn.addEventListener('click',function(e){
             e.preventDefault();
             let farter = e.currentTarget.parentNode.parentNode
-            farter = farter.textContent.charAt(0)
-            if(poopy[farter-1].salePrice <= money){
-                console.log(poopy.splice(farter-1,1))
+            let pooper = farter.querySelector('h6')
+            pooper = pooper.textContent
+            if(poopy[pooper-1].salePrice <= money){
+                console.log(poopy.splice(pooper-1,1))
                 counter=1
                 clearField(DOMSelectors.flexblacks)
                 poopy.forEach((item)=>{
-                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card>${counter}<h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
+                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
                     counter++
                 })
-                money = Math.round(money - poopy[farter-1].salePrice)
+                money = Math.round(money - poopy[pooper-1].salePrice)
                 console.log(money)
             }else{
   
-                console.log('BROKIE',money,poopy[farter-1].salePrice)
+                console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
         })
     })
@@ -124,19 +139,20 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
     async function getData(URL){
         try {
             let response = await fetch(URL);
-            let fart = await response.json(); 
+            let fart = await response.json();
             fart.products.forEach((item)=>{
-                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card>${counter}<h2>${item.name}, price is ${item.salePrice}<button id=cartButton class=butters>add to fart</button></h2></div>`)
+                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=cartButton class=butters>add to fart</button></h2></div>`)
                 counter++;
             })
             let carterButton = document.querySelectorAll('#cartButton')
             carterButton.forEach((btn)=>{
                 btn.addEventListener('click',function(e){
                     e.preventDefault();
-                    
                     let farter = e.currentTarget.parentNode.parentNode
-                    farter = farter.textContent.charAt(0)
-                    poopy.push(fart.products[farter-1])
+                    let pooper = farter.querySelector('h6')
+                    pooper = pooper.textContent
+                    console.log(pooper)
+                    poopy.push(fart.products[pooper-1])
                 })
             })
             
