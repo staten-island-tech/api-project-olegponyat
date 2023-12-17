@@ -35,7 +35,7 @@ const categoryPaths = {
 }
 let counter = 1
 let poopy = []
-let money = 0
+let money = 20
 
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
 
@@ -69,8 +69,8 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
             e.preventDefault();
             let farter = e.currentTarget.parentNode.parentNode
             farter = farter.textContent.charAt(0)
-            if(poopy[farter-1].salePrice < money){
-                poopy.splice(farter-1,1)
+            if(poopy[farter-1].salePrice <= money){
+                console.log(poopy.splice(farter-1,1))
                 counter=1
                 clearField(DOMSelectors.flexblacks)
                 poopy.forEach((item)=>{
@@ -80,8 +80,8 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 money = Math.round(money - poopy[farter-1].salePrice)
                 console.log(money)
             }else{
-                alert('BROKIE',poopy)
-                console.log(money)
+  
+                console.log('BROKIE',money,poopy[farter-1].salePrice)
             }
         })
     })
