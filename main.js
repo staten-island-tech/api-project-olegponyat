@@ -103,7 +103,19 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     })
 })
 
-
+DOMSelectors.moneyButton.addEventListener('click',function(e){
+    e.preventDefault();
+    clearField(DOMSelectors.flexblacks)
+    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2>`)
+    let moneyMakerButton = document.querySelector('#moneymaker')
+    let moneycounter = document.querySelector('.moneycounter')
+    moneyMakerButton.addEventListener('click',function(e){
+        e.preventDefault();
+        money = money + 1
+        clearField(moneycounter)
+        moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
+})
+})
 
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
