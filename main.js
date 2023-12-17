@@ -12,7 +12,9 @@ const DOMSelectors = {
     searchButton: document.querySelector('.submitter'),
     cartButton: document.querySelector('#cart'),
     moneyButton: document.querySelector('#money'),
-    homer: document.querySelector('#homer')
+    homer: document.querySelector('#homer'),
+    dropdownCheckboxes: document.querySelector('.dropbtn'),
+    cell: document.querySelector('#cellular'),
 }
 
 const categoryPaths = {
@@ -45,9 +47,11 @@ function clearField(x){
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
     clearField(DOMSelectors.flexblacks)
-    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h2>hi guys</h2>`)
+    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>hi guys</h1>`)
 })
-
+DOMSelectors.dropdownCheckboxes.addEventListener('click',function(e){
+    e.preventDefault();
+})
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
