@@ -48,19 +48,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h2>hi guys</h2>`)
 })
 
-DOMSelectors.moneyButton.addEventListener('click',function(e){
-    e.preventDefault();
-    clearField(DOMSelectors.flexblacks)
-    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2>`)
-    let moneyMakerButton = document.querySelector('#moneymaker')
-    let moneycounter = document.querySelector('.moneycounter')
-    moneyMakerButton.addEventListener('click',function(e){
-        e.preventDefault();
-        money = money + 1
-        clearField(moneycounter)
-        moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
-})
-})
+
 
 DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
@@ -89,7 +77,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card>${counter}<h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
                     counter++
                 })
-                money = money - poopy[farter-1].salePrice
+                money = Math.round(money - poopy[farter-1].salePrice)
                 console.log(money)
             }else{
                 alert('BROKIE',poopy)
@@ -99,7 +87,19 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     })
 })
 
-
+DOMSelectors.moneyButton.addEventListener('click',function(e){
+    e.preventDefault();
+    clearField(DOMSelectors.flexblacks)
+    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2>`)
+    let moneyMakerButton = document.querySelector('#moneymaker')
+    let moneycounter = document.querySelector('.moneycounter')
+    moneyMakerButton.addEventListener('click',function(e){
+        e.preventDefault();
+        money = money + 1
+        clearField(moneycounter)
+        moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
+})
+})
 
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
