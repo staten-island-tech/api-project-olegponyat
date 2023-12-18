@@ -62,7 +62,12 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
             }
         DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
             if(checkbox.checked === true){
-                
+                let text = e.currentTarget.parentNode.textContent
+                if(text === 'Cell Phones'){
+                    categoryID = 'pcmcat209400050001'
+                }else if(checkbox.checked === false){
+                    categoryID
+                }
             }
 
         })
@@ -91,7 +96,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     console.log(poopy)
     if(poopy.length != 0){
         poopy.forEach((item)=>{
-            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
+            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>buy and make factory</button></h2></div>`)
             counter++
         })
     }else{
@@ -105,17 +110,16 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
             let pooper = farter.querySelector('h6')
             pooper = pooper.textContent
             if(poopy[pooper-1].salePrice <= money){
-                console.log(poopy.splice(pooper-1,1))
+                poopy.splice(pooper-1,1)
                 counter=1
                 clearField(DOMSelectors.flexblacks)
                 poopy.forEach((item)=>{
-                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>add to fart</button></h2></div>`)
+                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>buy and make factory</button></h2></div>`)
                     counter++
                 })
                 money = Math.round(money - poopy[pooper-1].salePrice)
                 console.log(money)
             }else{
-  
                 console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
         })
@@ -137,13 +141,13 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
-    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value}))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice&pageSize=100&format=json`
+    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value})&(categoryPath.id=${categoryID}))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice&pageSize=100&format=json`
     async function getData(URL){
         try {
             let response = await fetch(URL);
             let fart = await response.json();
             fart.products.forEach((item)=>{
-                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=cartButton class=butters>add to fart</button></h2></div>`)
+                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=cartButton class=butters>add to cart</button></h2></div>`)
                 counter++;
             })
             let carterButton = document.querySelectorAll('#cartButton')
@@ -153,7 +157,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
                     let farter = e.currentTarget.parentNode.parentNode
                     let pooper = farter.querySelector('h6')
                     pooper = pooper.textContent
-                    console.log(pooper)
+                    console.log(fart.products[pooper-1])
                     poopy.push(fart.products[pooper-1])
                 })
             })
