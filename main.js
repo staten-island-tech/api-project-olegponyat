@@ -35,7 +35,7 @@ let poopy = []
 let money = 20
 let checkedCount = 0;
 const maxAllowed = 1;
-let categoryID
+let categoryID = ''
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
 
 
@@ -51,6 +51,32 @@ DOMSelectors.homer.addEventListener('click',function(e){
 })
 DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
     checkbox.addEventListener('change',function(e){
+        if(checkbox.checked === true){
+            let text = e.currentTarget.parentNode.textContent
+            if(text === 'Cell Phones'){
+                categoryID = '&(categoryPath.id=pcmcat209400050001)'
+            }else if(text === 'Desktops'){
+                categoryID = '&(categoryPath.id=abcat0501000)'
+            }else if(text === 'Cameras'){
+                categoryID = '&(categoryPath.id=abcat0401000)'
+            }else if(text === 'Health'){
+                categoryID = '&(categoryPath.id=pcmcat242800050021)'
+            }else if(text === 'Headphones'){
+                categoryID = '&(categoryPath.id=abcat0204000)'
+            }else if(text === 'Tablets'){
+                categoryID = '&(categoryPath.id=pcmcat209000050006)'
+            }else if(text === 'Laptops'){
+                categoryID = '&(categoryPath.id=abcat0502000)'
+            }else if(text === 'Speakers'){
+                categoryID = '&(categoryPath.id=pcmcat310200050004)'
+            }else if(text === 'Refrigerators'){
+                categoryID = '&(categoryPath.id=abcat0901000)'
+            }else if(text === 'Televisions'){
+                categoryID = '&(categoryPath.id=abcat0101000)'
+            }
+        }else if(checkbox.checked === false){
+                categoryID = ''
+        }
         if (this.checked) {
                 checkedCount += 1;
                 if (checkedCount > maxAllowed) {
@@ -59,18 +85,9 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
                 }
             } else {
                 checkedCount -= 1;
-            }
-        DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
-            if(checkbox.checked === true){
-                let text = e.currentTarget.parentNode.textContent
-                if(text === 'Cell Phones'){
-                    categoryID = 'pcmcat209400050001'
-                }else if(checkbox.checked === false){
-                    categoryID
-                }
-            }
-
-        })
+            
+            
+        }
     })
 })
 
@@ -141,11 +158,12 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField(DOMSelectors.flexblacks)
-    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value})&(categoryPath.id=${categoryID}))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice&pageSize=100&format=json`
+    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value})${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice&pageSize=100&format=json`
     async function getData(URL){
         try {
             let response = await fetch(URL);
             let fart = await response.json();
+            console.log(poop)
             fart.products.forEach((item)=>{
                 DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=cartButton class=butters>add to cart</button></h2></div>`)
                 counter++;
