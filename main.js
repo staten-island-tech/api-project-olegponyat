@@ -14,6 +14,8 @@ const DOMSelectors = {
     moneyButton: document.querySelector('#money'),
     homer: document.querySelector('#homer'),
     dropdownCheckboxes: document.querySelectorAll('.checkersbockers'),
+    moners: document.querySelector('#moners'),
+    cardinject: document.querySelector('#card-inject')
 }
 console.log(DOMSelectors.dropdownCheckboxes)
 
@@ -40,13 +42,16 @@ let categoryID = ''
 
 
 
-function clearField(x){
+function clearField(){
+    DOMSelectors.flexblacks.innerHTML = '';
+    DOMSelectors.moners.innerHTML = '';
+}
+function clearFieldSpec(x){
     x.innerHTML = ''
 }
-
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
-    clearField(DOMSelectors.flexblacks)
+    clearField()
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>hi guys</h1>`)
 })
 DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
@@ -94,21 +99,21 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
 
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
-    clearField(DOMSelectors.flexblacks)
-    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2>`)
+    clearField()
+    DOMSelectors.moners.insertAdjacentHTML('beforeend',`,<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2></div>`)
     let moneyMakerButton = document.querySelector('#moneymaker')
     let moneycounter = document.querySelector('.moneycounter')
     moneyMakerButton.addEventListener('click',function(e){
         e.preventDefault();
         money = money + 1
-        clearField(moneycounter)
+        clearFieldSpec(moneycounter)
         moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
     })
-})
+}) 
 DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
-    clearField(DOMSelectors.flexblacks);
+    clearField();
     console.log(poopy.length)
     console.log(poopy)
     if(poopy.length != 0){
@@ -129,7 +134,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
             if(poopy[pooper-1].salePrice <= money){
                 poopy.splice(pooper-1,1)
                 counter=1
-                clearField(DOMSelectors.flexblacks)
+                clearField()
                 poopy.forEach((item)=>{
                     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>buy and make factory</button></h2></div>`)
                     counter++
@@ -142,22 +147,10 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         })
     })
 })
-DOMSelectors.moneyButton.addEventListener('click',function(e){
-    e.preventDefault();
-    clearField(DOMSelectors.flexblacks)
-    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2>`)
-    let moneyMakerButton = document.querySelector('#moneymaker')
-    let moneycounter = document.querySelector('.moneycounter')
-    moneyMakerButton.addEventListener('click',function(e){
-        e.preventDefault();
-        money = money + 1
-        clearField(moneycounter)
-        moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
-})
-})
+
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
-    clearField(DOMSelectors.flexblacks)
+    clearField()
     let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value})${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice&pageSize=100&format=json`
     async function getData(URL){
         try {
@@ -165,7 +158,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
             let fart = await response.json();
             console.log(poop)
             fart.products.forEach((item)=>{
-                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=cartButton class=butters>add to cart</button></h2></div>`)
+                DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2 class=card-title>${item.name}, price is ${item.salePrice}<img src=${item.image} class=card-img><button id=cartButton class=butters>add to cart</button></h2></div>`)
                 counter++;
             })
             let carterButton = document.querySelectorAll('#cartButton')
@@ -184,7 +177,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
             throw new Error(response.statusText);
         }
         } catch (error) {
-            DOMSelectors.h2.textContent = (`Error Code ${response.status}, this is ${response.statusText}`);
+            DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, this is ${response.statusText}`);
         }
 }
 counter = 1

@@ -20,8 +20,13 @@ html{
 }
 #main{
   font-size: 10rem;
+  margin-top: -190%;
   display: flex;
   justify-content: center;
+}
+#card-inject{
+  display: flex;
+  margin-top: -190%;
 }
 .cookies{
   font-size: 5rem;
@@ -31,6 +36,36 @@ html{
   display: flex;
   align-items: center;
   margin: auto;
+}
+#fleckersbockers{
+  display: flex;
+  flex-direction: row;
+}
+#moners{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+#card-inject{
+  margin: 0 70% 0 0;
+  display: flex;
+  flex-direction: column;
+}
+.card{
+  margin: 0 1037px 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.card-title{
+  font-size: 1.5rem ;
+}
+.card-img{
+  height: 250px;
+  width: auto;
+}
+#moners{
+  margin: 0 30% 0 0;
 }
 .moneycounter{
   font-size: 3rem;
@@ -79,7 +114,6 @@ html{
     cursor: pointer;
 
   }
-      
   .inners:hover {
     box-shadow: 0 .5rem 1.5rem var(--color-brand-slightly-less-lighter-than-normal-color-brand);
     border-radius: 10%;
