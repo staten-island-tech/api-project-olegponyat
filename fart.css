@@ -20,7 +20,7 @@ html{
 }
 #main{
   font-size: 10rem;
-  margin-top: -190%;
+  margin-top: -2%;
   display: flex;
   justify-content: center;
 }
@@ -53,8 +53,9 @@ html{
 }
 .card{
   margin: 0 1037px 0 20px;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
+
   flex-direction: row;
 }
 .card-title{

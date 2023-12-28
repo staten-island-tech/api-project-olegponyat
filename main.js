@@ -34,6 +34,7 @@ const categoryPaths = {
 }
 let counter = 1
 let poopy = []
+let factory = []
 let money = 20
 let checkedCount = 0;
 const maxAllowed = 1;
@@ -45,6 +46,7 @@ let categoryID = ''
 function clearField(){
     DOMSelectors.flexblacks.innerHTML = '';
     DOMSelectors.moners.innerHTML = '';
+    DOMSelectors.cardinject.innerHTML = '';
 }
 function clearFieldSpec(x){
     x.innerHTML = ''
@@ -52,7 +54,7 @@ function clearFieldSpec(x){
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
     clearField()
-    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>hi guys</h1>`)
+    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>um</h1>`)
 })
 DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
     checkbox.addEventListener('change',function(e){
@@ -100,7 +102,7 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField()
-    DOMSelectors.moners.insertAdjacentHTML('beforeend',`,<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2></div>`)
+    DOMSelectors.moners.insertAdjacentHTML('beforeend',`<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2></div>`)
     let moneyMakerButton = document.querySelector('#moneymaker')
     let moneycounter = document.querySelector('.moneycounter')
     moneyMakerButton.addEventListener('click',function(e){
