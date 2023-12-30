@@ -18,16 +18,17 @@ html{
 .flexbox{
   display:flex;
 }
+#factories{
+  height: 150px;
+  width: 150px;
+}
 #main{
   font-size: 10rem;
   margin-top: -2%;
   display: flex;
   justify-content: center;
 }
-#card-inject{
-  display: flex;
-  margin-top: -190%;
-}
+
 .cookies{
   font-size: 5rem;
   height: 350px;
@@ -45,11 +46,14 @@ html{
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  align-items: center;
+  margin: auto;
 }
 #card-inject{
   margin: 0 70% 0 0;
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 .card{
   margin: 0 1037px 0 20px;

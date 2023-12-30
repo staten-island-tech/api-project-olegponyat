@@ -102,6 +102,7 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField()
+    console.log(factory)
     DOMSelectors.moners.insertAdjacentHTML('beforeend',`<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2></div>`)
     let moneyMakerButton = document.querySelector('#moneymaker')
     let moneycounter = document.querySelector('.moneycounter')
@@ -110,6 +111,10 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
         money = money + 1
         clearFieldSpec(moneycounter)
         moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
+        
+    })
+    factory.forEach((item)=>{
+        DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<img src=fafafa.png id=factories>`)
     })
 }) 
 DOMSelectors.cartButton.addEventListener('click',function(e){
@@ -141,6 +146,8 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>buy and make factory</button></h2></div>`)
                     counter++
                 })
+                factory.push(poopy[pooper-1])
+                console.log(factory)
                 money = Math.round(money - poopy[pooper-1].salePrice)
                 console.log(money)
             }else{
