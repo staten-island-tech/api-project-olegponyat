@@ -35,7 +35,7 @@ const categoryPaths = {
 let counter = 1
 let poopy = []
 let factory = []
-let money = 20
+let money = 100
 let checkedCount = 0;
 const maxAllowed = 1;
 let categoryID = ''
@@ -113,43 +113,88 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
         moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
         
     })
-    factory.forEach((item)=>{
-        DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<img src=fafafa.png id=factories>`)
-    })
+    if(factory.length != 0){
+        factory.forEach(()=>{
+            DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<img src=fafafa.png id=factories>`)
+        })
+    }else{
+        DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<h2 class=blanked>you havent bought any products yet FATTY</h2>`)
+    }
 }) 
 DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
     clearField();
-    console.log(poopy.length)
     console.log(poopy)
     if(poopy.length != 0){
         poopy.forEach((item)=>{
-            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>buy and make factory</button></h2></div>`)
+            DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
+                <h6 class=poop>${counter}</h6>
+                <div class="product-details">
+                    <div class="product-info">
+                        <div class=product-thumbnail>
+                            <img src=${item.image} alt=bortnite class=thumbnail>
+                        </div>
+                        <div class=product-basic>
+                            <h3 class=product-title>${item.name}</h3>
+                            <h5 class="product-sku">SKU: ${item.sku}</h5>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <span class="product-price">$${item.salePrice}</span>
+                        <button class=btn>Buy Now</button>
+                    </div>
+                </div>
+            </div>`)
             counter++
         })
+        let checkout = 0
+        poopy.forEach((poop)=>{
+            checkout = checkout + poop.salePrice
+        })
+        DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2>`)
     }else{
-        DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2>you havent added anything to ur cart yet FATTY</h2>')
+        DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>you havent added anything to ur cart yet FATTY</h2>')
     }
-    let buyerButton = document.querySelectorAll('#buyButton');
+    let buyerButton = document.querySelectorAll('.btn');
+
     buyerButton.forEach((btn)=>{
         btn.addEventListener('click',function(e){
             e.preventDefault();
-            let farter = e.currentTarget.parentNode.parentNode
+            let farter = e.currentTarget.parentNode.parentNode.parentNode
             let pooper = farter.querySelector('h6')
             pooper = pooper.textContent
+            counter=1
+            const card = btn.closest('.product-card'); // Find the closest card element
+            console.log(card)
             if(poopy[pooper-1].salePrice <= money){
                 poopy.splice(pooper-1,1)
-                counter=1
-                clearField()
+                
+                card.remove()
+                /* clearField()
                 poopy.forEach((item)=>{
-                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2>${item.name}, price is ${item.salePrice}<button id=buyButton class=butters>buy and make factory</button></h2></div>`)
+                    DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
+                    <h6 class=poop>${counter}</h6>
+                    <div class="product-details">
+                        <div class="product-info">
+                            <div class=product-thumbnail>
+                                <img src=${item.image} alt=bortnite class=thumbnail>
+                            </div>
+                            <div class=product-basic>
+                                <h3 class=product-title>${item.name}</h3>
+                                <h5 class="product-sku">SKU: ${item.sku}</h5>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <span class="product-price">$${item.salePrice}</span>
+                            <button class=btn>Buy Now</button>
+                        </div>
+                    </div>
+                    </div>`)
                     counter++
-                })
-                factory.push(poopy[pooper-1])
-                console.log(factory)
+                }) */
                 money = Math.round(money - poopy[pooper-1].salePrice)
-                console.log(money)
+                factory.push(poopy[pooper-1])
             }else{
                 console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
@@ -160,21 +205,72 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
 DOMSelectors.searchButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField()
-    let poop = `https://api.bestbuy.com/v1/products((search=${DOMSelectors.searchbar.value})${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice&pageSize=100&format=json`
+    function formatAsQueryParam(input) {
+        const wordsArray = input.trim().split(/\s+/);
+        
+        if (wordsArray.length > 1) {
+            const formattedWords = wordsArray.map(word => `search=${word}`).join('&');
+            return `(${formattedWords})`;
+        } else {
+            return `(search=${input})`;
+        }
+    }
+    const formattedQuery = formatAsQueryParam(DOMSelectors.searchbar.value);
+    
+    let poop = `https://api.bestbuy.com/v1/products(${formattedQuery}${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
     async function getData(URL){
         try {
             let response = await fetch(URL);
             let fart = await response.json();
             console.log(poop)
+            function getTotalElements() {
+                const container = document.getElementById('card-inject');
+              
+                if (container) {
+                  const childNodes = container.childNodes;
+                  const elementNodes = Array.from(childNodes).filter(node => node.nodeType === 1);
+                  return elementNodes.length;
+                } else {
+                  return -1;
+                }
+            }
             fart.products.forEach((item)=>{
-                DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class=card><h6>${counter}</h6><h2 class=card-title>${item.name}, price is ${item.salePrice}<img src=${item.image} class=card-img><button id=cartButton class=butters>add to cart</button></h2></div>`)
+                DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
+                    <div class="product-card">
+                        <h6>${counter}</h6>
+                        <div class="product-details">
+                            <div class="product-info">
+                                <div class=product-thumbnail>
+                                    <img src=${item.image} alt=bortnite class=thumbnail>
+                                </div>
+                                <div class=product-basic>
+                                    <h3 class=product-title>${item.name}</h3>
+                                    <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <span class="product-price">$${item.salePrice}</span>
+                                <button class=btn>Add to Cart</button>
+
+                            </div>
+                        </div>
+                    </div>`)
                 counter++;
             })
-            let carterButton = document.querySelectorAll('#cartButton')
+            
+            const total = getTotalElements();
+            if(total != 0){
+                DOMSelectors.cardinject.insertAdjacentHTML('afterbegin',`<div class=total-items>${total} items</div>`)
+            }else{
+                DOMSelectors.cardinject.insertAdjacentHTML('afterbegin',`<div class=blanked>no items found fatty</div>`)
+            }
+            
+            let carterButton = document.querySelectorAll('.btn')
+            console.log(carterButton)
             carterButton.forEach((btn)=>{
                 btn.addEventListener('click',function(e){
                     e.preventDefault();
-                    let farter = e.currentTarget.parentNode.parentNode
+                    let farter = e.currentTarget.parentNode.parentNode.parentNode
                     let pooper = farter.querySelector('h6')
                     pooper = pooper.textContent
                     console.log(fart.products[pooper-1])
