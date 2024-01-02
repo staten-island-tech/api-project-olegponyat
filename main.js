@@ -51,11 +51,6 @@ function clearField(){
 function clearFieldSpec(x){
     x.innerHTML = ''
 }
-DOMSelectors.homer.addEventListener('click',function(e){
-    e.preventDefault()
-    clearField()
-    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h1>um</h1>`)
-})
 DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
     checkbox.addEventListener('change',function(e){
         if(checkbox.checked === true){
@@ -97,7 +92,58 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
         }
     })
 })
+DOMSelectors.homer.addEventListener('click',function(e){
+    e.preventDefault()
+    clearField()
+    let poop = `https://api.bestbuy.com/v1/products((categoryPath.id=pcmcat209400050001))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
+    <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
+    <h2>here are some recommended products you can buy based on your selected category</h2>`)
+    async function getData(URL){
+        try {
+            let response = await fetch(URL);
+            let fart = await response.json();
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+            }
+            let port = []
+            for(i=0; i <= 3; i++){
+                const farty = getRandomInt(0,fart.products.length)
+                port.push(fart.products[farty])
+            }
+            port.forEach((item)=>{
+                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
+                <h6 class=poop>${counter}</h6>
+                <div class="product-details">
+                    <div class="product-info">
+                        <div class=product-thumbnail>
+                            <img src=${item.image} alt=bortnite class=thumbnail>
+                        </div>
+                        <div class=product-basic>
+                            <h3 class=product-title>${item.name}</h3>
+                            <h5 class="product-sku">SKU: ${item.sku}</h5>
+                        </div>
+                    </div>
+                    <div class="product-actions">
+                        <span class="product-price">$${item.salePrice}</span>
+                        <button class=btn>Buy Now</button>
+                    </div>
+                </div>
+            </div>`)
+            })
 
+        if(response.status != 200){
+
+        }
+        } catch (error) {
+            DOMSelectors.flexblacks.textContent = (`Error Code`);
+        }
+}
+counter = 1
+getData(poop);
+})
 
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
@@ -169,7 +215,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         })
         let checkout = 0
         poopy.forEach((poop)=>{
-            checkout = checkout + poop.salePrice
+            checkout = Math.round(checkout + poop.salePrice)
         })
         DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2>`)
     }else{
