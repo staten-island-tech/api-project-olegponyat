@@ -71,6 +71,14 @@ html{
   height: 25px;
   font-size: 1.4rem;
 }
+.factory-card{
+  display: flex;
+  border-bottom: 1px solid #e0e6ef;
+  overflow: hidden;
+  width: 100%;
+  height: 175px;
+  transition: box-shadow 0.3s ease;
+}
 /* Product details container */
 .product-details {
   display: flex;

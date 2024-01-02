@@ -111,11 +111,30 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
         money = money + 1
         clearFieldSpec(moneycounter)
         moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
-        
     })
     if(factory.length != 0){
-        factory.forEach(()=>{
-            DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<img src=fafafa.png id=factories>`)
+        factory.forEach((item)=>{
+            DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
+            <div class="factory-card">
+                <h6>${counter}</h6>
+                <div class="product-details">
+                    <div class="product-info">
+                        <div class=product-thumbnail>
+                            <img src=fafafa.png alt=bortnite id=factories>
+                        </div>
+                        <div class=product-basic>
+                            <h3 class=product-title>${item.name}</h3>
+                            <h5 class="product-sku">SKU: ${item.sku}</h5>
+                            <h2>paid $${item.salePrice}</h2>
+                            <h2>currently adding: $${Math.round(item.salePrice)/20} per second
+                        </div>
+                    </div>
+                </div>
+            </div>`)
+            setInterval(() => {
+                money = money + Math.round((item.salePrice/20))
+                moneycounter.textContent = `money = ${money}`
+              }, 1000); 
         })
     }else{
         DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<h2 class=blanked>you havent bought any products yet FATTY</h2>`)
