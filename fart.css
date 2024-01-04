@@ -98,7 +98,8 @@ html{
 .product-thumbnail{
   display: inline;
   height: 260px;
-  width: 20%;
+  width: auto;
+  max-width: 250px;
   vertical-align: text-top;
 }
 .thumbnail{
