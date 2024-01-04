@@ -124,7 +124,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=${item.image} alt=bortnite class=thumbnail>
+                            <img src=${item.image} alt=(${item.name}) class=thumbnail>
                         </div>
                         <div class=product-basic>
                             <h3 class=product-title>${item.name}</h3>
@@ -170,7 +170,7 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=fafafa.png alt=bortnite id=factories>
+                            <img src=fafafa.png alt=image of ${item.name} id=factories>
                         </div>
                         <div class=product-basic>
                             <h3 class=product-title>${item.name}</h3>
@@ -211,7 +211,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=${item.image} alt=bortnite class=thumbnail>
+                            <img src=${item.image} alt=image of ${item.name} class=thumbnail>
                         </div>
                         <div class=product-basic>
                             <h3 class=product-title>${item.name}</h3>
@@ -319,7 +319,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
                         <div class="product-details">
                             <div class="product-info">
                                 <div class=product-thumbnail>
-                                    <img src=${item.image} alt=bortnite class=thumbnail>
+                                    <img src=${item.image} alt=image of ${item.name} class=thumbnail>
                                 </div>
                                 <div class=product-basic>
                                     <h3 class=product-title>${item.name}</h3>
