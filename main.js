@@ -151,7 +151,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
 counter = 1
 getData(poop);
 })
-
+let intervalId
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
     clearField()
@@ -166,6 +166,14 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
     })
     if(factory.length != 0){
         factory.forEach((item)=>{
+            function startCounting() {
+                intervalId = setInterval(() => {
+                    money = money + Math.round((item.salePrice/20))
+                    moneycounter.textContent = `money = ${money}`
+                }, 1000);
+            }
+            clearInterval(intervalId);
+            startCounting(); 
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
             <div class="factory-card">
                 <h6>${counter}</h6>
@@ -183,30 +191,19 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
                     </div>
                 </div>
             </div>`)
-            setInterval(() => {
-                money = money + Math.round((item.salePrice/20))
-                moneycounter.textContent = `money = ${money}`
-              }, 1000); 
+
         })
     }else{
         DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<h2 class=blanked>you havent bought any products yet FATTY</h2>`)
     }
 })
-let intervalId
+
 DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
     clearField();
     console.log(poopy)
     if(poopy.length != 0){
-        function startCounting() {
-            intervalId = setInterval(() => {
-                money = money + Math.round((item.salePrice/20))
-                moneycounter.textContent = `money = ${money}`
-            }, 1000);
-        }
-        clearInterval(intervalId);
-        startCounting();
         poopy.forEach((item)=>{
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
                 <h6 class=poop>${counter}</h6>
@@ -232,7 +229,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         poopy.forEach((poop)=>{
             checkout = Math.round(checkout + poop.salePrice)
         })
-        DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2>`)
+        DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
     }else{
         DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>you havent added anything to ur cart yet FATTY</h2>')
     }
@@ -275,6 +272,8 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 }) */
                 money = Math.round(money - poopy[pooper-1].salePrice)
                 factory.push(poopy[pooper-1])
+                let checkoutFinal = document.querySelector('.checkout-btn')
+                
             }else{
                 console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
