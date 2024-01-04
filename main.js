@@ -108,10 +108,15 @@ DOMSelectors.homer.addEventListener('click',function(e){
                 max = Math.floor(max);
                 return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
             }
-            let port = []
-            for(i=0; i <= 3; i++){
-                const farty = getRandomInt(0,fart.products.length)
-                port.push(fart.products[farty])
+            let port = [];
+            const maxIndex = fart.products.length;
+
+            while (port.length < 4) {
+            const randomIndex = getRandomInt(0, maxIndex);
+            
+            if (!port.includes(fart.products[randomIndex])) {
+                port.push(fart.products[randomIndex]);
+            }
             }
             port.forEach((item)=>{
                 DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
@@ -155,8 +160,7 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
     moneyMakerButton.addEventListener('click',function(e){
         e.preventDefault();
         money = money + 1
-        clearFieldSpec(moneycounter)
-        moneycounter.insertAdjacentHTML('beforeend',`money = ${money}`)
+        moneycounter.textContent = 'money = ' + money
     })
     if(factory.length != 0){
         factory.forEach((item)=>{
@@ -185,13 +189,22 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
     }else{
         DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<h2 class=blanked>you havent bought any products yet FATTY</h2>`)
     }
-}) 
+})
+let intervalId
 DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
     clearField();
     console.log(poopy)
     if(poopy.length != 0){
+        function startCounting() {
+            intervalId = setInterval(() => {
+                money = money + Math.round((item.salePrice/20))
+                moneycounter.textContent = `money = ${money}`
+            }, 1000);
+        }
+        clearInterval(intervalId);
+        startCounting();
         poopy.forEach((item)=>{
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
                 <h6 class=poop>${counter}</h6>
