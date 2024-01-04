@@ -17,21 +17,7 @@ const DOMSelectors = {
     moners: document.querySelector('#moners'),
     cardinject: document.querySelector('#card-inject')
 }
-console.log(DOMSelectors.dropdownCheckboxes)
 
-
-const categoryPaths = {
-    cellphones: '0pcmcat209400050001',
-    desktops: '1abcat0501000',
-    cameras: '2abcat0401000',
-    health: '3pcmcat242800050021',
-    headphones: '4abcat0204000',
-    tablets: '5pcmcat209000050006',
-    laptops: '6abcat0502000',
-    speakers: '7pcmcat310200050004',
-    refrigerators: '8abcat0901000',
-    television: '9abcat0101000',
-}
 let counter = 1
 let poopy = []
 let factory = []
@@ -39,9 +25,8 @@ let money = 100
 let checkedCount = 0;
 const maxAllowed = 1;
 let categoryID = ''
+
 //?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO
-
-
 
 function clearField(){
     DOMSelectors.flexblacks.innerHTML = '';
@@ -95,13 +80,25 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
     clearField()
-    let poop = `https://api.bestbuy.com/v1/products((categoryPath.id=pcmcat209400050001))?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+    function addParentheses(str) {
+        return `(${str})`;
+    }
+    let newCategory
+    if(categoryID === ''){
+        console.log('jakey wakey eggs and bakey')
+        newCategory = ''
+    }else{
+        newCategory = addParentheses(categoryID.replace('&',''))
+    }
+    let poop = `https://api.bestbuy.com/v1/products${newCategory}?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+    console.log(poop)
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
     <h2>here are some recommended products you can buy based on your selected category</h2>`)
     async function getData(URL){
         try {
             let response = await fetch(URL);
+            console.log(response)
             let fart = await response.json();
             function getRandomInt(min, max) {
                 min = Math.ceil(min);
@@ -112,38 +109,43 @@ DOMSelectors.homer.addEventListener('click',function(e){
             const maxIndex = fart.products.length;
 
             while (port.length < 4) {
-            const randomIndex = getRandomInt(0, maxIndex);
+                const randomIndex = getRandomInt(0, maxIndex);
             
-            if (!port.includes(fart.products[randomIndex])) {
-                port.push(fart.products[randomIndex]);
+                if (!port.includes(fart.products[randomIndex])) {
+                    port.push(fart.products[randomIndex]);
+                }
             }
-            }
-            port.forEach((item)=>{
-                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
-                <h6 class=poop>${counter}</h6>
-                <div class="product-details">
-                    <div class="product-info">
-                        <div class=product-thumbnail>
-                            <img src=${item.image} alt=(${item.name}) class=thumbnail>
+            if(newCategory === ''){
+                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>WASSAAAAAA</h2>')
+            }else{
+                port.forEach((item)=>{
+                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
+                    <h6 class=poop>${counter}</h6>
+                    <div class="product-details">
+                        <div class="product-info">
+                            <div class=product-thumbnail>
+                                <img src=${item.image} alt=(${item.name}) class=thumbnail>
+                            </div>
+                            <div class=product-basic>
+                                <h3 class=product-title>${item.name}</h3>
+                                <h5 class="product-sku">SKU: ${item.sku}</h5>
+                            </div>
                         </div>
-                        <div class=product-basic>
-                            <h3 class=product-title>${item.name}</h3>
-                            <h5 class="product-sku">SKU: ${item.sku}</h5>
+                        <div class="product-actions">
+                            <span class="product-price">$${item.salePrice}</span>
+                            <button class=btn>Buy Now</button>
                         </div>
                     </div>
-                    <div class="product-actions">
-                        <span class="product-price">$${item.salePrice}</span>
-                        <button class=btn>Buy Now</button>
-                    </div>
-                </div>
-            </div>`)
-            })
-
+                </div>`)
+                })
+            }
+            
         if(response.status != 200){
 
         }
         } catch (error) {
-            DOMSelectors.flexblacks.textContent = (`Error Code`);
+            DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, `);
+
         }
 }
 counter = 1
@@ -298,8 +300,8 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
     let poop = `https://api.bestbuy.com/v1/products(${formattedQuery}${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
     async function getData(URL){
         try {
-            let response = await fetch(URL);
-            let fart = await response.json();
+            const response = await fetch(URL);
+            const fart = await response.json();
             console.log(poop)
             function getTotalElements() {
                 const container = document.getElementById('card-inject');
@@ -360,7 +362,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
             throw new Error(response.statusText);
         }
         } catch (error) {
-            DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, this is ${response.statusText}`);
+            DOMSelectors.flexblacks.textContent = `Error Code ${response}, this is ${response.statusText}`
         }
 }
 counter = 1
