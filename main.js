@@ -85,32 +85,31 @@ DOMSelectors.homer.addEventListener('click',function(e){
     }
     let newCategory
     if(categoryID === ''){
-        console.log('jakey wakey eggs and bakey')
         newCategory = ''
     }else{
         newCategory = addParentheses(categoryID.replace('&',''))
     }
     let poop = `https://api.bestbuy.com/v1/products${newCategory}?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
-    console.log(poop)
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
     <h2>here are some recommended products you can buy based on your selected category</h2>`)
     async function getData(URL){
         try {
             let response = await fetch(URL);
-            console.log(response)
             let fart = await response.json();
+            counter = 1
             function getRandomInt(min, max) {
                 min = Math.ceil(min);
                 max = Math.floor(max);
                 return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
             }
             let port = [];
+            let numberList = [];
             const maxIndex = fart.products.length;
 
             while (port.length < 4) {
                 const randomIndex = getRandomInt(0, maxIndex);
-            
+                numberList.push(randomIndex)
                 if (!port.includes(fart.products[randomIndex])) {
                     port.push(fart.products[randomIndex]);
                 }
@@ -118,27 +117,41 @@ DOMSelectors.homer.addEventListener('click',function(e){
             if(newCategory === ''){
                 DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>WASSAAAAAA</h2>')
             }else{
-                port.forEach((item)=>{
+                let index = 0
+                port.forEach((item)=>{                   
                     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
-                    <h6 class=poop>${counter}</h6>
-                    <div class="product-details">
-                        <div class="product-info">
-                            <div class=product-thumbnail>
-                                <img src=${item.image} alt=(${item.name}) class=thumbnail>
+                        <h6 class=poop>${numberList[index]}</h6>
+                        <div class="product-details">
+                            <div class="product-info">
+                                <div class=product-thumbnail>
+                                    <img src=${item.image} alt=(${item.name}) class=thumbnail>
+                                </div>
+                                <div class=product-basic>
+                                    <h3 class=product-title>${item.name}</h3>
+                                    <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                </div>
                             </div>
-                            <div class=product-basic>
-                                <h3 class=product-title>${item.name}</h3>
-                                <h5 class="product-sku">SKU: ${item.sku}</h5>
+                            <div class="product-actions">
+                                <span class="product-price">$${item.salePrice}</span>
+                                <button class=btn>Buy Now</button>
                             </div>
                         </div>
-                        <div class="product-actions">
-                            <span class="product-price">$${item.salePrice}</span>
-                            <button class=btn>Buy Now</button>
-                        </div>
-                    </div>
-                </div>`)
+                    </div>`)
+                    counter++
+                    index++
+                })
+
+                let carterButton = document.querySelectorAll('.btn')
+                carterButton.forEach((btn)=>{
+                    btn.addEventListener('click',function(e){
+                        e.preventDefault();
+                        let farter = e.currentTarget.parentNode.parentNode.parentNode
+                        let pooper = farter.querySelector('h6').textContent
+                        poopy.push(fart.products[pooper-1])
+                    })
                 })
             }
+            
             
         if(response.status != 200){
 
@@ -151,11 +164,10 @@ DOMSelectors.homer.addEventListener('click',function(e){
 counter = 1
 getData(poop);
 })
-let intervalIds = []; // an array to store the interval references
+let intervalId
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
-    clearField()   
-    console.log(factory)
+    clearField();
     DOMSelectors.moners.insertAdjacentHTML('beforeend',`<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2></div>`)
     let moneyMakerButton = document.querySelector('#moneymaker')
     let moneycounter = document.querySelector('.moneycounter')
@@ -164,26 +176,17 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
         money = money + 1
         moneycounter.textContent = 'money = ' + money
     })
+    
     if(factory.length != 0){
-        
-        factory.forEach((item)=>{
+        factory.forEach((item)=>{ 
             function startCounting() {
-                let intervalId = setInterval(() => {
+                intervalId = setInterval(() => {
                     money = money + Math.round((item.salePrice/20))
-                    console.log(money)
-                    //moneycounter.textContent = `money = ${money}`
+                    moneycounter.textContent = `money = ${money}`
                 }, 1000);
-                intervalIds.push(intervalId); // add the interval reference to the array
             }
-            function clearAllIntervals() {
-                for (let id of intervalIds) {
-                    clearInterval(id);
-                }
-                intervalIds = []; // reset the array
-            }
-            clearAllIntervals();
+            clearInterval(intervalId);
             startCounting();
-            console.log(intervalIds)
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
             <div class="factory-card">
                 <h6>${counter}</h6>
@@ -203,6 +206,7 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
             </div>`)
 
         })
+
     }else{
         DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<h2 class=blanked>you havent bought any products yet FATTY</h2>`)
     }
@@ -212,7 +216,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
     clearField();
-    console.log(poopy)
+
     if(poopy.length != 0){
         poopy.forEach((item)=>{
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
@@ -253,8 +257,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 })
                 poopy = []
                 }
-                DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
-               
+            DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)               
         })
     }else{
         DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>you havent added anything to ur cart yet FATTY</h2>')
@@ -273,6 +276,10 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 poopy.splice(pooper-1,1)
                 counter = 1               
                 clearField()
+                let checkout = 0
+                poopy.forEach((poop)=>{
+                    checkout = Math.round(checkout + poop.salePrice)
+                })
                 poopy.forEach((item)=>{
                     DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
                     <h6 class=poop>${counter}</h6>
@@ -294,9 +301,9 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                     </div>`)
                     counter++
                 })
+                DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
                 money = Math.round(money - poopy[pooper-1].salePrice)
-                factory.push(poopy[pooper-1])
-                
+                factory.push(poopy[pooper-1])                
             }else{
                 console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
@@ -324,7 +331,6 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
         try {
             const response = await fetch(URL);
             const fart = await response.json();
-            console.log(poop)
             function getTotalElements() {
                 const container = document.getElementById('card-inject');
               
@@ -364,18 +370,15 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
             if(total != 0){
                 DOMSelectors.cardinject.insertAdjacentHTML('afterbegin',`<div class=total-items>${total} items</div>`)
             }else{
-                DOMSelectors.cardinject.insertAdjacentHTML('afterbegin',`<div class=blanked>no items found fatty</div>`)
+                DOMSelectors.cardinject.insertAdjacentHTML('afterbegin',`<div class=blanked>no items found fatty. maybe check your checkboxes?</div>`)
             }
             
             let carterButton = document.querySelectorAll('.btn')
-            console.log(carterButton)
             carterButton.forEach((btn)=>{
                 btn.addEventListener('click',function(e){
                     e.preventDefault();
                     let farter = e.currentTarget.parentNode.parentNode.parentNode
-                    let pooper = farter.querySelector('h6')
-                    pooper = pooper.textContent
-                    console.log(fart.products[pooper-1])
+                    let pooper = farter.querySelector('h6').textContent
                     poopy.push(fart.products[pooper-1])
                 })
             })
