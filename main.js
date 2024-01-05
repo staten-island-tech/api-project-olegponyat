@@ -178,11 +178,12 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
     })
     
     if(factory.length != 0){
+        console.log(factory)
         factory.forEach((item)=>{ 
             function startCounting() {
                 intervalId = setInterval(() => {
-                    money = money + Math.round((item.salePrice/20))
-                    moneycounter.textContent = `money = ${money}`
+                    money = money + Number((item.salePrice/20).toFixed(2))
+                    moneycounter.textContent = `money = ${money.toFixed(2)}`
                 }, 1000);
             }
             clearInterval(intervalId);
@@ -199,7 +200,7 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
                             <h3 class=product-title>${item.name}</h3>
                             <h5 class="product-sku">SKU: ${item.sku}</h5>
                             <h2>paid $${item.salePrice}</h2>
-                            <h2>currently adding: $${Math.round(item.salePrice)/20} per second
+                            <h2>currently adding: $${Number((item.salePrice)/20).toFixed(2)} per second
                         </div>
                     </div>
                 </div>
@@ -216,8 +217,8 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     e.preventDefault();
     counter = 1
     clearField();
-
-    if(poopy.length != 0){
+    DOMSelectors.moners.textContent = '*YOU CAN ONLY BUY 1 ITEM AT A TIME (i havent fixed that yet)'
+    if(poopy.length > 0){
         poopy.forEach((item)=>{
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
                 <h6 class=poop>${counter}</h6>
@@ -250,17 +251,16 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
             if(money >= checkout){
                 clearField()
                 checkout=0
-
                 poopy.forEach((item)=>{
                     money = Math.round(money - item.salePrice)
                     factory.push(item)
                 })
                 poopy = []
-                }
-            DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)               
+                DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)   
+            }            
         })
     }else{
-        DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>you havent added anything to ur cart yet FATTY</h2>')
+        DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>you need more than 1 item in ur cart FATTY</h2>')
     }
     let buyerButton = document.querySelectorAll('.btn');
 
@@ -268,14 +268,15 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         btn.addEventListener('click',function(e){
             e.preventDefault();
             let farter = e.currentTarget.parentNode.parentNode.parentNode
-            let pooper = farter.querySelector('h6').textContent
+            let pooper = farter.querySelector('span').textContent.replace('$','')
+            let itemSelector = farter.querySelector('h6').textContent
             counter=1
-            const card = btn.closest('.product-card');
             
-            if(poopy[pooper-1].salePrice <= money){
-                poopy.splice(pooper-1,1)
+            if(pooper <= money){
+                poopy.splice(itemSelector-1,1)
                 counter = 1               
                 clearField()
+                DOMSelectors.moners.textContent = '*YOU CAN ONLY BUY 1 ITEM AT A TIME (i havent fixed that yet)'
                 let checkout = 0
                 poopy.forEach((poop)=>{
                     checkout = Math.round(checkout + poop.salePrice)
@@ -302,8 +303,8 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                     counter++
                 })
                 DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
-                money = Math.round(money - poopy[pooper-1].salePrice)
-                factory.push(poopy[pooper-1])                
+                money = Math.round(money - pooper)
+                factory.push(poopy[itemSelector-1])                
             }else{
                 console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
