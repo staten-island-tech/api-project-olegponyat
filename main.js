@@ -71,12 +71,96 @@ DOMSelectors.dropdownCheckboxes.forEach((checkbox)=>{
                     checkedCount -= 1;
                 }
             } else {
-                checkedCount -= 1;
-            
-            
+                checkedCount -= 1;           
         }
     })
 })
+window.addEventListener("load", function(e) {
+    function addParentheses(str) {
+        return `(${str})`;
+    }
+    let newCategory
+    if(categoryID === ''){
+        newCategory = ''
+    }else{
+        newCategory = addParentheses(categoryID.replace('&',''))
+    }
+    let poop = `https://api.bestbuy.com/v1/products${newCategory}?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
+    <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
+    <h2>here are some recommended products you can buy based on your selected category</h2>`)
+    async function getData(URL){
+        try {
+            let response = await fetch(URL);
+            let fart = await response.json();
+            counter = 1
+            function getRandomInt(min, max) {
+                min = Math.ceil(min);
+                max = Math.floor(max);
+                return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+            }
+            let port = [];
+            let numberList = [];
+            const maxIndex = fart.products.length;
+
+            while (port.length < 4) {
+                const randomIndex = getRandomInt(0, maxIndex);
+                numberList.push(randomIndex)
+                if (!port.includes(fart.products[randomIndex])) {
+                    port.push(fart.products[randomIndex]);
+                }
+            }
+            if(newCategory === ''){
+                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>WASSAAAAAA</h2>')
+            }else{
+                let index = 0
+                port.forEach((item)=>{                   
+                    DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
+                        <h6 class=poop>${numberList[index]}</h6>
+                        <div class="product-details">
+                            <div class="product-info">
+                                <div class=product-thumbnail>
+                                    <img src=${item.image} alt=(${item.name}) class=thumbnail>
+                                </div>
+                                <div class=product-basic>
+                                    <h3 class=product-title>${item.name}</h3>
+                                    <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                </div>
+                            </div>
+                            <div class="product-actions">
+                                <span class="product-price">$${item.salePrice}</span>
+                                <button class=btn>Buy Now</button>
+                            </div>
+                        </div>
+                    </div>`)
+                    counter++
+                    index++
+                })
+
+                let carterButton = document.querySelectorAll('.btn')
+                carterButton.forEach((btn)=>{
+                    btn.addEventListener('click',function(e){
+                        e.preventDefault();
+                        let farter = e.currentTarget.parentNode.parentNode.parentNode
+                        let pooper = farter.querySelector('h6').textContent
+                        poopy.push(fart.products[pooper-1])
+                    })
+                })
+            }
+            
+            
+        if(response.status != 200){
+
+        }
+        } catch (error) {
+            DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, `);
+
+        }
+}
+counter = 1
+getData(poop);
+
+  });
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
     clearField()
@@ -165,29 +249,37 @@ counter = 1
 getData(poop);
 })
 let intervalId
+let timeouts = []
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
+    counter = 1
     clearField();
-    DOMSelectors.moners.insertAdjacentHTML('beforeend',`<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money}</h2></div>`)
+    DOMSelectors.moners.insertAdjacentHTML('beforeend',`<div class=moneyfart><h1 id=main>MONEY</h1><button class=cookies id=moneymaker>click for moeny</button><h2 class=moneycounter>money = ${money.toFixed(2)}</h2></div>`)
     let moneyMakerButton = document.querySelector('#moneymaker')
     let moneycounter = document.querySelector('.moneycounter')
     moneyMakerButton.addEventListener('click',function(e){
         e.preventDefault();
         money = money + 1
-        moneycounter.textContent = 'money = ' + money
+        moneycounter.textContent = 'money = ' + money.toFixed(2)
     })
     
     if(factory.length != 0){
         console.log(factory)
-        factory.forEach((item)=>{ 
-            function startCounting() {
-                intervalId = setInterval(() => {
-                    money = money + Number((item.salePrice/20).toFixed(2))
-                    moneycounter.textContent = `money = ${money.toFixed(2)}`
-                }, 1000);
+        factory.forEach((item, index)=>{ 
+            const increment = (item.salePrice / 20) * (index + 1); // Increment calculation
+            function clearAllTimeouts() {
+                timeouts.forEach((timeoutId) => {
+                  clearTimeout(timeoutId);
+                });
+                timeouts = [];
             }
-            clearInterval(intervalId);
-            startCounting();
+            clearAllTimeouts()
+            const timeoutId = setInterval(() => {
+                money = money + increment;
+                moneycounter.textContent = `money = ${money.toFixed(2)}`;
+            }, 1000); // Delay each item's addition by 1 second
+
+            timeouts.push(timeoutId);
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
             <div class="factory-card">
                 <h6>${counter}</h6>
@@ -205,7 +297,7 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
                     </div>
                 </div>
             </div>`)
-
+            counter++
         })
 
     }else{
@@ -242,7 +334,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         })
         let checkout = 0
         poopy.forEach((poop)=>{
-            checkout = Math.round(checkout + poop.salePrice)
+            checkout = checkout + poop.salePrice
         })
         DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
         let checkoutFinal = document.querySelector('#checkout-btn')
@@ -262,6 +354,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     }else{
         DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>you need more than 1 item in ur cart FATTY</h2>')
     }
+
     let buyerButton = document.querySelectorAll('.btn');
 
     buyerButton.forEach((btn)=>{
@@ -271,8 +364,10 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
             let pooper = farter.querySelector('span').textContent.replace('$','')
             let itemSelector = farter.querySelector('h6').textContent
             counter=1
-            
+
             if(pooper <= money){
+                factory.push(poopy[itemSelector-1])
+                money = Math.round(money - pooper)
                 poopy.splice(itemSelector-1,1)
                 counter = 1               
                 clearField()
@@ -303,8 +398,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                     counter++
                 })
                 DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
-                money = Math.round(money - pooper)
-                factory.push(poopy[itemSelector-1])                
+                            
             }else{
                 console.log('BROKIE',money,poopy[pooper-1].salePrice)
             }
@@ -326,7 +420,21 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
         }
     }
     const formattedQuery = formatAsQueryParam(DOMSelectors.searchbar.value);
-    
+    function createFloatingText(element) {
+        const floatingText = document.createElement('div');
+        floatingText.textContent = 'Added to Cart';
+        floatingText.classList.add('floating-text');
+      
+        const buttonRect = element.getBoundingClientRect();
+        floatingText.style.left = buttonRect.left + 'px';
+        floatingText.style.top = buttonRect.top - 40 + 'px'; // Adjust the position as needed
+      
+        document.body.appendChild(floatingText);
+      
+        setTimeout(() => {
+          floatingText.remove();
+        }, 3000); // Remove after 3 seconds
+      }
     let poop = `https://api.bestbuy.com/v1/products(${formattedQuery}${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
     async function getData(URL){
         try {
@@ -381,6 +489,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
                     let farter = e.currentTarget.parentNode.parentNode.parentNode
                     let pooper = farter.querySelector('h6').textContent
                     poopy.push(fart.products[pooper-1])
+                    createFloatingText(e.currentTarget); // Pass the clicked button element to the function
                 })
             })
             

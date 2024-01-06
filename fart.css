@@ -333,3 +333,26 @@ input:not(:placeholder-shown) {
   .dropdown:focus-within .dropdown-content {
     display: block;
   }
+  .floating-text {
+    position: absolute;
+    margin-left: 8%;
+    margin-top: 1.5%;
+    opacity: 1;
+    color: var(--color-dark);
+    padding: 10px;
+    font-size: 1.5rem;
+
+    z-index: 9999;
+    animation: floatText 2s ease-in-out forwards;
+  }
+  
+  @keyframes floatText {
+    0% {
+      opacity: 1;
+      transform: translate(-50%, 10%);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -210%);
+    }
+  }
