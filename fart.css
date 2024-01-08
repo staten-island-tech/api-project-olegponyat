@@ -111,7 +111,7 @@ html{
 .product-title {
   font-size: 18px;
   margin: 0;
-  color: #333;
+  color: var(--color-dark);
 }
 .product-basic{
   margin-left: 5%;
@@ -119,15 +119,15 @@ html{
 }
   /* Product SKU styling */
   .product-sku {
-    color: #666;
+    color: var(--color-dark);
     margin-top: 8px;
-    font-size: 1.23rem;
+    font-size: 1.43rem;
   }
 
   /* Product description styling */
   .product-description {
     margin-top: 8px;
-    color: #666;
+    color: var(--color-dark);
   }
 
   /* Product actions container */
@@ -144,7 +144,7 @@ html{
     display: inline-block;
     padding: 8px 16px;
     font-size: 14px;
-    color: #fff;
+    color: var(--color-dark);
     background-color: var(--color-brand-slightly-less-lighter-than-normal-color-brand);
     border: none;
     border-radius: 4px;
@@ -155,7 +155,7 @@ html{
   /* Price styling */
   .product-price {
     font-size: 2.5rem;
-    color: #333;
+    color: var(--color-dark);
     margin-bottom: 13px;
   }
 .moneycounter{
@@ -208,7 +208,7 @@ html{
     margin-top: 8%;
     padding: 20px 65px;
     text-decoration: none;
-    color: var(--color-light);
+    color: var(--color-dark);
     transition: var(--dur) all;
     position: relative;
     cursor: pointer;
@@ -274,7 +274,7 @@ html{
     height: var(--height);
     font-family: var(--font-fam);
     border: 0;
-    color: var(--color-light);
+    color: var(--color-dark);
     font-size: 1.2rem;
 }
 input:not(:placeholder-shown) {
@@ -300,7 +300,7 @@ input:not(:placeholder-shown) {
   }
   .dropbtn {
     background-color: var(--color-brand);
-    color: var(--color-light);
+    color: var(--color-dark);
     padding: 25px 40px;
     font-size: 16px;
     border: none;
@@ -314,7 +314,7 @@ input:not(:placeholder-shown) {
     min-width: 160px;
   }
   .dropdown-content a{
-    color: black;
+    color: var(--color-dark);
     font-size: 1.2rem;
     padding: 8px 12px;
     text-decoration: none;

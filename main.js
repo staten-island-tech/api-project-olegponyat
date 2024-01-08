@@ -79,13 +79,8 @@ window.addEventListener("load", function(e) {
     function addParentheses(str) {
         return `(${str})`;
     }
-    let newCategory
-    if(categoryID === ''){
-        newCategory = ''
-    }else{
-        newCategory = addParentheses(categoryID.replace('&',''))
-    }
-    let poop = `https://api.bestbuy.com/v1/products${newCategory}?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+
+    let poop = `https://api.bestbuy.com/v1/products?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
     <h2>here are some recommended products you can buy based on your selected category</h2>`)
@@ -110,9 +105,7 @@ window.addEventListener("load", function(e) {
                     port.push(fart.products[randomIndex]);
                 }
             }
-            if(newCategory === ''){
-                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>WASSAAAAAA</h2>')
-            }else{
+
                 let index = 0
                 port.forEach((item)=>{                   
                     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<div class="product-card">
@@ -124,7 +117,7 @@ window.addEventListener("load", function(e) {
                                 </div>
                                 <div class=product-basic>
                                     <h3 class=product-title>${item.name}</h3>
-                                    <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                    <h4 class="product-sku">SKU: ${item.sku}</h4>
                                 </div>
                             </div>
                             <div class="product-actions">
@@ -143,14 +136,14 @@ window.addEventListener("load", function(e) {
                         e.preventDefault();
                         let farter = e.currentTarget.parentNode.parentNode.parentNode
                         let pooper = farter.querySelector('h6').textContent
-                        poopy.push(fart.products[pooper-1])
+                        poopy.push(fart.products[pooper])
                     })
                 })
-            }
+            
             
             
         if(response.status != 200){
-
+            DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h2>Error Code${response.status}</h2>`)
         }
         } catch (error) {
             DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, `);
@@ -159,8 +152,7 @@ window.addEventListener("load", function(e) {
 }
 counter = 1
 getData(poop);
-
-  });
+});
 DOMSelectors.homer.addEventListener('click',function(e){
     e.preventDefault()
     clearField()
@@ -177,7 +169,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
     <h2>here are some recommended products you can buy based on your selected category</h2>`)
-    async function getData(URL){
+    async function rizzler(URL){
         try {
             let response = await fetch(URL);
             let fart = await response.json();
@@ -208,11 +200,11 @@ DOMSelectors.homer.addEventListener('click',function(e){
                         <div class="product-details">
                             <div class="product-info">
                                 <div class=product-thumbnail>
-                                    <img src=${item.image} alt=(${item.name}) class=thumbnail>
+                                    <img src=${item.image} alt="${item.name}" class=thumbnail>
                                 </div>
                                 <div class=product-basic>
                                     <h3 class=product-title>${item.name}</h3>
-                                    <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                    <h4 class="product-sku">SKU: ${item.sku}</h4>
                                 </div>
                             </div>
                             <div class="product-actions">
@@ -231,12 +223,10 @@ DOMSelectors.homer.addEventListener('click',function(e){
                         e.preventDefault();
                         let farter = e.currentTarget.parentNode.parentNode.parentNode
                         let pooper = farter.querySelector('h6').textContent
-                        poopy.push(fart.products[pooper-1])
+                        poopy.push(fart.products[pooper])
                     })
                 })
             }
-            
-            
         if(response.status != 200){
 
         }
@@ -246,7 +236,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
         }
 }
 counter = 1
-getData(poop);
+rizzler(poop);
 })
 let intervalId
 let timeouts = []
@@ -312,16 +302,17 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     DOMSelectors.moners.textContent = '*YOU CAN ONLY BUY 1 ITEM AT A TIME (i havent fixed that yet)'
     if(poopy.length > 0){
         poopy.forEach((item)=>{
+            img.alt = `Image of ${item.name}`
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
                 <h6 class=poop>${counter}</h6>
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=${item.image} alt=image of ${item.name} class=thumbnail>
+                            <img src=${item.image} alt=${item.alt} class=thumbnail>
                         </div>
                         <div class=product-basic>
                             <h3 class=product-title>${item.name}</h3>
-                            <h5 class="product-sku">SKU: ${item.sku}</h5>
+                            <h4 class="product-sku">SKU: ${item.sku}</h4>
                         </div>
                     </div>
                     <div class="product-actions">
@@ -336,7 +327,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
         poopy.forEach((poop)=>{
             checkout = checkout + poop.salePrice
         })
-        DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
+        DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout.toFixed(2)}</h2><button id=checkout-btn>Buy All</button>`)
         let checkoutFinal = document.querySelector('#checkout-btn')
         checkoutFinal.addEventListener('click',function(e){
             e.preventDefault()
@@ -386,7 +377,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                             </div>
                             <div class=product-basic>
                                 <h3 class=product-title>${item.name}</h3>
-                                <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                <h4 class="product-sku">SKU: ${item.sku}</h4>
                             </div>
                         </div>
                         <div class="product-actions">
@@ -462,7 +453,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
                                 </div>
                                 <div class=product-basic>
                                     <h3 class=product-title>${item.name}</h3>
-                                    <h5 class="product-sku">SKU: ${item.sku}</h5>
+                                    <h4 class="product-sku">SKU: ${item.sku}</h4>
                                 </div>
                             </div>
                             <div class="product-actions">
