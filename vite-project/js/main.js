@@ -1,3 +1,6 @@
+import './css/style.css'
+
+
 function greet(fart){
     const greetPromise = new Promise(function(resolve,reject){
         resolve(`Hello ${fart}`)
@@ -113,16 +116,16 @@ window.addEventListener("load", function(e) {
                         <div class="product-details">
                             <div class="product-info">
                                 <div class=product-thumbnail>
-                                    <img src=${item.image} alt=(${item.name}) class=thumbnail>
+                                    <img src=${item.image} alt=(${item.name}) tabindex="0" class=thumbnail>
                                 </div>
                                 <div class=product-basic>
-                                    <h3 class=product-title>${item.name}</h3>
-                                    <h4 class="product-sku">SKU: ${item.sku}</h4>
+                                    <h3 class=product-title tabindex="0" >${item.name}</h3>
+                                    <h4 class="product-sku" tabindex="0" >SKU: ${item.sku}</h4>
                                 </div>
                             </div>
                             <div class="product-actions">
-                                <span class="product-price">$${item.salePrice}</span>
-                                <button class=btn>Buy Now</button>
+                                <span class="product-price" tabindex="0" >$${item.salePrice}</span>
+                                <button class=btn tabindex="0" >Buy Now</button>
                             </div>
                         </div>
                     </div>`)
@@ -191,7 +194,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
                 }
             }
             if(newCategory === ''){
-                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>WASSAAAAAA</h2>')
+                DOMSelectors.flexblacks.insertAdjacentHTML('beforeend','<h2 class=blanked>no categories currently selected</h2>')
             }else{
                 let index = 0
                 port.forEach((item)=>{                   
@@ -200,16 +203,16 @@ DOMSelectors.homer.addEventListener('click',function(e){
                         <div class="product-details">
                             <div class="product-info">
                                 <div class=product-thumbnail>
-                                    <img src=${item.image} alt="${item.name}" class=thumbnail>
+                                    <img src=${item.image} alt="${item.name}" class=thumbnail tabindex="0">
                                 </div>
                                 <div class=product-basic>
-                                    <h3 class=product-title>${item.name}</h3>
-                                    <h4 class="product-sku">SKU: ${item.sku}</h4>
+                                    <h3 class=product-title tabindex="0" >${item.name}</h3>
+                                    <h4 class="product-sku" tabindex="0" >SKU: ${item.sku}</h4>
                                 </div>
                             </div>
                             <div class="product-actions">
-                                <span class="product-price">$${item.salePrice}</span>
-                                <button class=btn>Buy Now</button>
+                                <span class="product-price" tabindex="0" >$${item.salePrice}</span>
+                                <button class=btn tabindex="0" >Buy Now</button>
                             </div>
                         </div>
                     </div>`)
@@ -276,13 +279,13 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=fafafa.png alt=image of ${item.name} id=factories>
+                            <img src=fafafa.png alt=image of ${item.name} id=factories tabindex="0" >
                         </div>
                         <div class=product-basic>
-                            <h3 class=product-title>${item.name}</h3>
-                            <h5 class="product-sku">SKU: ${item.sku}</h5>
-                            <h2>paid $${item.salePrice}</h2>
-                            <h2>currently adding: $${Number((item.salePrice)/20).toFixed(2)} per second
+                            <h3 class=product-title tabindex="0" >${item.name}</h3>
+                            <h5 class="product-sku" tabindex="0" >SKU: ${item.sku}</h5>
+                            <h2 tabindex="0" >paid $${item.salePrice}</h2>
+                            <h2 tabindex="0" >currently adding: $${Number((item.salePrice)/20).toFixed(2)} per second
                         </div>
                     </div>
                 </div>
