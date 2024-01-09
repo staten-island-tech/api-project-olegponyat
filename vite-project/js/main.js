@@ -11,7 +11,7 @@ function greet(fart){
 let counter = 1
 let poopy = []
 let factory = []
-let money = 100
+let money = 0
 let checkedCount = 0;
 const maxAllowed = 1;
 let categoryID = ''
@@ -72,7 +72,7 @@ window.addEventListener("load", function(e) {
     let poop = `https://api.bestbuy.com/v1/products?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
-    <h2>here are some products that i just got off load :)</h2>
+    <h2>here are some products that i just got off load :)  (ps, EVERYTHING on the navbar has a purpose, including the logo)</h2>
     <p>because youre mister whalen (and me not managing my time correctly), the directions are up for you to find out</p>`)
     console.log(greet(poop))
     async function getData(URL){
@@ -162,7 +162,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
     console.log(greet(poop))
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
-    <h2>here are some recommended products you can buy based on your selected category</h2>`)
+    <h2>here are some recommended products you can buy based on your selected category (ps, EVERYTHING on the navbar has a purpose, including the logo)</h2>`)
     async function rizzler(URL){
         try {
             let response = await fetch(URL);
@@ -242,14 +242,14 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
     let moneycounter = document.querySelector('.moneycounter')
     moneyMakerButton.addEventListener('click',function(e){
         e.preventDefault();
-        money = money + 1
+        money = money + 0.25
         moneycounter.textContent = 'money = ' + money.toFixed(2)
     })
     
     if(factory.length != 0){
         console.log(factory)
         factory.forEach((item, index)=>{ 
-            const increment = (item.salePrice / 20) * (index + 1); // Increment calculation
+            const increment = (item.salePrice / 50) * (index + 1); // Increment calculation
             function clearAllTimeouts() {
                 timeouts.forEach((timeoutId) => {
                   clearTimeout(timeoutId);
@@ -275,7 +275,7 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
                             <h3 class=product-title tabindex="0" >${item.name}</h3>
                             <h5 class="product-sku" tabindex="0" >SKU: ${item.sku}</h5>
                             <h2 tabindex="0" >paid $${item.salePrice}</h2>
-                            <h2 tabindex="0" >currently adding: $${Number((item.salePrice)/20).toFixed(2)} per second
+                            <h2 tabindex="0" >currently adding: $${Number((item.salePrice)/50).toFixed(2)} per second
                         </div>
                     </div>
                 </div>
@@ -384,7 +384,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 DOMSelectors.moners.insertAdjacentHTML('beforeend',`<h2>Checkout All: ${checkout}</h2><button id=checkout-btn>Buy All</button>`)
                             
             }else{
-                console.log('BROKIE',money,poopy[pooper-1].salePrice)
+                alert(`HAHA!!! YOU'RE A BROKIE 😂😂😂😂😂😂😂😂😂😂😂!!!! YOU NEED $${pooper} AND YOU ONLY HAVE $${money} HAHA 😂😂😂😂😂😂😂!!!!! LIL PLUMP😂😂😂😂😂😂😂😂😂😂😂😂😂`)
             }
         })
     })
