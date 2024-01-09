@@ -1,24 +1,11 @@
-import './css/style.css'
-
+import '../css/style.css'
+import { DOMSelectors } from './DOM'
 
 function greet(fart){
     const greetPromise = new Promise(function(resolve,reject){
         resolve(`Hello ${fart}`)
     })
     return greetPromise
-}
-
-const DOMSelectors = {
-    h2: document.querySelectorAll('h2'),
-    flexblacks: document.querySelector('#flexbox'),
-    searchbar: document.querySelector('.search'),
-    searchButton: document.querySelector('.submitter'),
-    cartButton: document.querySelector('#cart'),
-    moneyButton: document.querySelector('#money'),
-    homer: document.querySelector('#homer'),
-    dropdownCheckboxes: document.querySelectorAll('.checkersbockers'),
-    moners: document.querySelector('#moners'),
-    cardinject: document.querySelector('#card-inject')
 }
 
 let counter = 1
@@ -82,14 +69,16 @@ window.addEventListener("load", function(e) {
     function addParentheses(str) {
         return `(${str})`;
     }
-
     let poop = `https://api.bestbuy.com/v1/products?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
-    <h2>here are some recommended products you can buy based on your selected category</h2>`)
+    <h2>here are some products that i just got off load :)</h2>
+    <p>because youre mister whalen (and me not managing my time correctly), the directions are up for you to find out</p>`)
+    console.log(greet(poop))
     async function getData(URL){
         try {
             let response = await fetch(URL);
+            console.log(response)
             let fart = await response.json();
             counter = 1
             function getRandomInt(min, max) {
@@ -125,7 +114,7 @@ window.addEventListener("load", function(e) {
                             </div>
                             <div class="product-actions">
                                 <span class="product-price" tabindex="0" >$${item.salePrice}</span>
-                                <button class=btn tabindex="0" >Buy Now</button>
+                                <button class=btn tabindex="0">add to cart</button>
                             </div>
                         </div>
                     </div>`)
@@ -147,6 +136,7 @@ window.addEventListener("load", function(e) {
             
         if(response.status != 200){
             DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`<h2>Error Code${response.status}</h2>`)
+            throw new Error(response.statusText);            
         }
         } catch (error) {
             DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, `);
@@ -169,6 +159,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
         newCategory = addParentheses(categoryID.replace('&',''))
     }
     let poop = `https://api.bestbuy.com/v1/products${newCategory}?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+    console.log(greet(poop))
     DOMSelectors.flexblacks.insertAdjacentHTML('beforeend',`
     <h1>welcome to grdy (pronouced griddy, not girdy).</h1>
     <h2>here are some recommended products you can buy based on your selected category</h2>`)
@@ -212,7 +203,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
                             </div>
                             <div class="product-actions">
                                 <span class="product-price" tabindex="0" >$${item.salePrice}</span>
-                                <button class=btn tabindex="0" >Buy Now</button>
+                                <button class=btn tabindex="0" >add to cart</button>
                             </div>
                         </div>
                     </div>`)
@@ -231,7 +222,7 @@ DOMSelectors.homer.addEventListener('click',function(e){
                 })
             }
         if(response.status != 200){
-
+            throw new Error(response.statusText);
         }
         } catch (error) {
             DOMSelectors.flexblacks.textContent = (`Error Code ${response.status}, `);
@@ -241,7 +232,6 @@ DOMSelectors.homer.addEventListener('click',function(e){
 counter = 1
 rizzler(poop);
 })
-let intervalId
 let timeouts = []
 DOMSelectors.moneyButton.addEventListener('click',function(e){
     e.preventDefault();
@@ -275,11 +265,11 @@ DOMSelectors.moneyButton.addEventListener('click',function(e){
             timeouts.push(timeoutId);
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
             <div class="factory-card">
-                <h6>${counter}</h6>
+                <h1>${counter}</h1>
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=fafafa.png alt=image of ${item.name} id=factories tabindex="0" >
+                            <img src=./public/fafafa.png alt=image of ${item.name} id=factories tabindex="0" >
                         </div>
                         <div class=product-basic>
                             <h3 class=product-title tabindex="0" >${item.name}</h3>
@@ -305,13 +295,13 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
     DOMSelectors.moners.textContent = '*YOU CAN ONLY BUY 1 ITEM AT A TIME (i havent fixed that yet)'
     if(poopy.length > 0){
         poopy.forEach((item)=>{
-            img.alt = `Image of ${item.name}`
+            let img = `Image of ${item.name}`
             DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
-                <h6 class=poop>${counter}</h6>
+                <h1>${counter}</h1>
                 <div class="product-details">
                     <div class="product-info">
                         <div class=product-thumbnail>
-                            <img src=${item.image} alt=${item.alt} class=thumbnail>
+                            <img src=${item.image} alt=${img} class=thumbnail>
                         </div>
                         <div class=product-basic>
                             <h3 class=product-title>${item.name}</h3>
@@ -356,7 +346,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
             e.preventDefault();
             let farter = e.currentTarget.parentNode.parentNode.parentNode
             let pooper = farter.querySelector('span').textContent.replace('$','')
-            let itemSelector = farter.querySelector('h6').textContent
+            let itemSelector = farter.querySelector('h1').textContent
             counter=1
 
             if(pooper <= money){
@@ -372,7 +362,7 @@ DOMSelectors.cartButton.addEventListener('click',function(e){
                 })
                 poopy.forEach((item)=>{
                     DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`<div class="product-card">
-                    <h6 class=poop>${counter}</h6>
+                    <h1>${counter}</h1>
                     <div class="product-details">
                         <div class="product-info">
                             <div class=product-thumbnail>
@@ -430,6 +420,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
         }, 3000); // Remove after 3 seconds
       }
     let poop = `https://api.bestbuy.com/v1/products(${formattedQuery}${categoryID})?apiKey=4oAIRKlbsIUvAP0gG5SNNcoO&sort=name.asc&show=name,image,salePrice,sku&pageSize=100&format=json`
+    console.log(greet(poop))
     async function getData(URL){
         try {
             const response = await fetch(URL);
@@ -446,13 +437,15 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
                 }
             }
             fart.products.forEach((item)=>{
+                let alttext = item.name.replace(/ /g,'-')
+                console.log(alttext)
                 DOMSelectors.cardinject.insertAdjacentHTML('beforeend',`
                     <div class="product-card">
-                        <h6>${counter}</h6>
+                        <h1>${counter}</h1>
                         <div class="product-details">
                             <div class="product-info">
                                 <div class=product-thumbnail>
-                                    <img src=${item.image} alt=image of ${item.name} class=thumbnail>
+                                    <img src=${item.image} alt=image-of-${alttext} class=thumbnail>
                                 </div>
                                 <div class=product-basic>
                                     <h3 class=product-title>${item.name}</h3>
@@ -481,7 +474,7 @@ DOMSelectors.searchButton.addEventListener('click',function(e){
                 btn.addEventListener('click',function(e){
                     e.preventDefault();
                     let farter = e.currentTarget.parentNode.parentNode.parentNode
-                    let pooper = farter.querySelector('h6').textContent
+                    let pooper = farter.querySelector('h1').textContent
                     poopy.push(fart.products[pooper-1])
                     createFloatingText(e.currentTarget); // Pass the clicked button element to the function
                 })
